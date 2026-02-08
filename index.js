@@ -7,12 +7,15 @@ require('dotenv').config();
 app.use(express.json()); // json file read
 
 
-let cors = require('cors'); // cros module
-app.use(cors({
-  origin: "http://localhost:5173"
-}));
+// let cors = require('cors'); // cros module
+// app.use(cors({
+//   origin: "http://localhost:5173"
+// }));                                    // it use only locally
 
 
+
+let cors = require('cors');
+app.use(cors());
 
 // routes
 app.use('/api/website/enquiry', router);
@@ -29,7 +32,7 @@ app.use('/', (req, res) => {
 
 
 // connect to mongoose
-mongoose.connect(process.env.DBURL)
+mongoose.connect(process.env.MONGO_URL)  // process.env.DBURL
   .then(() => {
     const PORT = process.env.PORT || 5000;
 
