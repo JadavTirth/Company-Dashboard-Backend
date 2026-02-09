@@ -4,6 +4,8 @@ let mongoose = require("mongoose");
 let router = require("./App/Routes/Routes");
 let cors = require("cors");
 require("dotenv").config();
+const noteRoutes = require("./App/Routes/NotesRouter");
+
 
 app.use(express.json());
 
@@ -17,6 +19,12 @@ app.use("/api/website/enquiry", router);
 app.get("/", (req, res) => {
   res.send("Welcome to the Enquiry API");
 });
+
+
+// routes for notes 
+app.use("/api/notes", noteRoutes);
+
+
 
 // ✅ MongoDB connect + server start
 mongoose
@@ -34,3 +42,5 @@ mongoose
   .catch((err) => {
     console.log("Error connecting to MongoDB:", err.message);
   });
+
+
