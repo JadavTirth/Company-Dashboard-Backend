@@ -1,40 +1,29 @@
-let express = require('express');
+let express = require("express");
 let app = express();
-let mongoose = require('mongoose');
-let router = require('./App/Routes/Routes');
-require('dotenv').config();
+let mongoose = require("mongoose");
+let router = require("./App/Routes/Routes");
+let cors = require("cors");
+require("dotenv").config();
 
-app.use(express.json()); // json file read
+app.use(express.json());
 
-
-// let cors = require('cors'); // cros module
-// app.use(cors({
-//   origin: "http://localhost:5173"
-// }));                                    // it use only locally
-
-
-
-let cors = require('cors');
+// ✅ CORS (local + vercel dono ke liye)
 app.use(cors());
 
-// routes
-app.use('/api/website/enquiry', router);
-//www.localhost:8000/api/website/enquiry/
+// ✅ routes
+app.use("/api/website/enquiry", router);
 
-
-
-
-app.use('/', (req, res) => {
+// ✅ health / test route
+app.get("/", (req, res) => {
   res.send("Welcome to the Enquiry API");
-}); // www.localhost:8000/
+});
 
-
-
-
-// connect to mongoose
-mongoose.connect(process.env.MONGO_URL)  // process.env.DBURL
+// ✅ MongoDB connect + server start
+mongoose
+  .connect(process.env.MONGO_URL)
   .then(() => {
-    const PORT = process.env.PORT || 5000;
+
+    const PORT = process.env.PORT || 8000;
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
