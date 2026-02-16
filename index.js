@@ -16,8 +16,11 @@ const enquiryRoutes = require("./App/Routes/Routes");
 // Notes Routes
 const noteRoutes = require("./App/Routes/NotesRouter");
 
-// 🔥 (ADD THIS) Event Routes
+// Event Routes
 const eventRoutes = require("./App/Routes/EventRouter");
+
+// 🔐 Auth Routes (NEW)
+const authRoutes = require("./App/Routes/authRoutes");
 
 
 // ==============================
@@ -29,11 +32,7 @@ const app = express();
 // ==============================
 // MIDDLEWARES
 // ==============================
-
-// Parse JSON body
 app.use(express.json());
-
-// Enable CORS (for local + Vercel frontend)
 app.use(cors());
 
 
@@ -41,13 +40,16 @@ app.use(cors());
 // API ROUTES
 // ==============================
 
+// 🔐 Auth API
+app.use("/api/auth", authRoutes);
+
 // Enquiry API
 app.use("/api/website/enquiry", enquiryRoutes);
 
 // Notes API
 app.use("/api/notes", noteRoutes);
 
-// 🔥 (ADD THIS WHEN YOU CREATE EVENT ROUTES)
+// Events API
 app.use("/api/events", eventRoutes);
 
 
@@ -55,7 +57,7 @@ app.use("/api/events", eventRoutes);
 // HEALTH CHECK ROUTE
 // ==============================
 app.get("/", (req, res) => {
-  res.send("Welcome to the Enquiry API 🚀");
+  res.send("🚀 API Running Successfully...");
 });
 
 
